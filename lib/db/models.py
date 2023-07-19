@@ -52,6 +52,10 @@ class Choice(Base):
 
     def __repr__(self):
         return f'<Choice id: {self.id}'
+    
+    @classmethod
+    def find_by_id(cls, query_id):
+        return session.query(cls).filter_by(id = query_id).first()
 
 class Outcome(Base):
     
@@ -67,3 +71,7 @@ class Outcome(Base):
 
     def __repr__(self):
         return f'<Outcome id: {self.id}'
+
+    @classmethod
+    def find_by_id(cls, query_id):
+        return session.query(cls).filter_by(id = query_id).first()
