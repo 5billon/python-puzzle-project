@@ -33,6 +33,10 @@ class Puzzle(Base):
     def __repr__(self):
         return f'<Puzzle id: {self.id} name: {self.name} question: {self.question}>'
     
+    @classmethod
+    def find_by_id(cls, query_id):
+        return session.query(cls).filter_by(id = query_id).first()
+    
 
         
 class Choice(Base):
@@ -66,19 +70,3 @@ class Outcome(Base):
 
     def __repr__(self):
         return f'<Outcome id: {self.id}'
-
-if __name__ == '__main__':
-    
-    engine = create_engine('sqlite:///puzzle.db')
-    Base.metadata.create_all(engine)
-
-    Session = sessionmaker( bind = engine)
-
-    session = Session()
-
-    puzzle_one = Puzzle(
-        name = 'puzzle_one',
-        question = 'I am a question',
-    )
-    session.add(puzzle_one)
-    session.commit()
