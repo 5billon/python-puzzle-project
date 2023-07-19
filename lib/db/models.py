@@ -16,6 +16,7 @@ Session = sessionmaker( bind = engine)
 
 session = Session()
 
+
 class Puzzle(Base):
 
     __tablename__ = 'puzzles'
@@ -24,46 +25,60 @@ class Puzzle(Base):
     name = Column(String())
     question = Column(String())
 
-    choices = relationship('Choice')
+    choices = relationship('Choice', back_populates = 'puzzle')
+
+    outcomes = relationship('Outcome', back_populates = 'puzzle')
     
 
     def __repr__(self):
         return f'<Puzzle id: {self.id} name: {self.name} question: {self.question}>'
     
-    if __name__ == '__main__':
-        engine = create_engine('sqlite:///puzzle.db')
-        Base.metadata.create_all(engine)
+
         
-        Session = sessionmaker( bind = engine)
-
-        session = Session()
-
-        puzzle4 = Puzzle(
-            name = 'Puzzle one',
-            question = 'The first question'
-        )
-        session.add([puzzle4])
-        session.commit()
-
 class Choice(Base):
 
     __tablename__ = 'choices'
 
     id = Column(Integer(), primary_key=True)
     puzzle_id = Column(Integer(), ForeignKey('puzzles.id'))
+    outcome_id = Column(Integer(), ForeignKey('outcomes.id'))
     answer = Column(String())
     #situaton.id = Column(Integer(), ForeignKey('situations.id'))
+
+    puzzle = relationship('Puzzle', back_populates = 'choices')
+
+    outcome = relationship('Outcome', back_populates = 'choices')
 
     def __repr__(self):
         return f'<Choice id: {self.id}'
 
-class Situation(Base):
+class Outcome(Base):
     
-    __tablename__ = 'situations'
+    __tablename__ = 'outcomes'
 
     id = Column(Integer(), primary_key=True)
+    puzzle_id = Column(Integer(), ForeignKey('puzzles.id'))
     name = Column(String())
 
-    def __repr__(self):
-        return f'<Situation id: {self.id}'
+    choices = relationship('Choice', back_populates = 'outcome')
 
+    puzzle = relationship('Puzzle', back_populates = 'outcomes')
+
+    def __repr__(self):
+        return f'<Outcome id: {self.id}'
+
+if __name__ == '__main__':
+    
+    engine = create_engine('sqlite:///puzzle.db')
+    Base.metadata.create_all(engine)
+
+    Session = sessionmaker( bind = engine)
+
+    session = Session()
+
+    puzzle_one = Puzzle(
+        name = 'puzzle_one',
+        question = 'I am a question',
+    )
+    session.add(puzzle_one)
+    session.commit()
