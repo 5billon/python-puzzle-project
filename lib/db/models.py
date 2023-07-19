@@ -22,24 +22,43 @@ class Puzzle(Base):
 
     id = Column(Integer(), primary_key=True)
     name = Column(String())
+    question = Column(String())
 
     choices = relationship('Choice')
     
 
     def __repr__(self):
-        return f'<Puzzle id: {self.id} name: {self.name}>'
+        return f'<Puzzle id: {self.id} name: {self.name} question: {self.question}>'
+    
+    if __name__ == '__main__':
+        engine = create_engine('sqlite:///puzzle.db')
+        Base.metadata.create_all(engine)
+        
+        Session = sessionmaker( bind = engine)
+
+        session = Session()
+
+        puzzle4 = Puzzle(
+            name = 'Puzzle one',
+            question = 'The first question'
+        )
+        session.add([puzzle4])
+        session.commit()
 
 class Choice(Base):
+
     __tablename__ = 'choices'
 
     id = Column(Integer(), primary_key=True)
     puzzle_id = Column(Integer(), ForeignKey('puzzles.id'))
+    answer = Column(String())
     #situaton.id = Column(Integer(), ForeignKey('situations.id'))
 
     def __repr__(self):
         return f'<Choice id: {self.id}'
 
 class Situation(Base):
+    
     __tablename__ = 'situations'
 
     id = Column(Integer(), primary_key=True)
