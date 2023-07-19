@@ -9,7 +9,7 @@ convention = {
 
 metadata = MetaData( naming_convention = convention)
 
-Base = declarative_base(metadata = metadata) # metadata = md
+Base = declarative_base(metadata = metadata)
 
 engine = create_engine('sqlite:///puzzle.db')
 Session = sessionmaker( bind = engine)
@@ -36,8 +36,6 @@ class Puzzle(Base):
     @classmethod
     def find_by_id(cls, query_id):
         return session.query(cls).filter_by(id = query_id).first()
-    
-
         
 class Choice(Base):
 
@@ -47,7 +45,6 @@ class Choice(Base):
     puzzle_id = Column(Integer(), ForeignKey('puzzles.id'))
     outcome_id = Column(Integer(), ForeignKey('outcomes.id'))
     answer = Column(String())
-    #situaton.id = Column(Integer(), ForeignKey('situations.id'))
 
     puzzle = relationship('Puzzle', back_populates = 'choices')
 
