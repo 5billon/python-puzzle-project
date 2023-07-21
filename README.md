@@ -19,6 +19,6 @@ You can type `help` at any time to see the commands.
 ## Puzzle Puzzle Team
 
 Kevin Mrozek https://github.com/5billon
-Ashay https://github.com/amorwale
+Ashay Morwale https://github.com/amorwale
 
 Special thanks to Marc Katz who was a big help in helping out in this project
