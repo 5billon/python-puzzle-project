@@ -2,6 +2,9 @@
 
 The Python Puzzle is a simple CLI based puzzle inside of python! Inside the CLI you can answer the questions hoping to reach the end, to win the special prize!
 
+## Disclaimer 
+For a simple more basic puzzle, stay in the `main` branch. For a more advanced elaborate puzzle, move into the `ashay` branch.
+
 ## Setup
 
 To first get into the right directory we will have to cd into the `lib/cd` files.
