@@ -4,6 +4,7 @@ from models import session, Puzzle, Choice, Outcome
 
 print('press x to exit at any point. Type "Help" to see list of available commands')
 print('You walk into a cave you found, and run into a bunker.')
+print('--------------------')
 
 user_input = 'not x'
 puzzle_id = 1
@@ -20,10 +21,11 @@ while user_input != 'x' and outcome_id != 11:
         check = False
         if user_input == option.answer:
             print(f'{option.outcome.name}')
+            print('--------------------')
             puzzle_id = option.outcome.puzzle_id
             outcome_id = option.outcome.id
             check = True
-            
+            break
         # elif user_input == '2':
         #     print(f'{options[0].outcome.name}')
         #     puzzle_id = options[0].outcome.puzzle_id
